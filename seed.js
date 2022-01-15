@@ -12,10 +12,26 @@ mongoose
     console.log(err);
   });
 
-const p = new Product({ name: "Santol", price: 4.99, category: "fruit" });
+const seedProducts = [
+  {
+    name: "Durian",
+    price: 5.99,
+    category: "fruit",
+  },
+  {
+    name: "Malunggay",
+    price: 1.99,
+    category: "vegetable",
+  },
+  {
+    name: "Sikwate",
+    price: 7.99,
+    category: "dairy",
+  },
+];
 
-p.save()
-  .then((p) => {
-    console.log(p);
+Product.insertMany(seedProducts)
+  .then((res) => {
+    console.log(res);
   })
   .catch((e) => console.log("Error seeding the farmStand collection", e));
