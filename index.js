@@ -33,7 +33,7 @@ app.post("/products", async (req, res) => {
   const product = new Product({ name, price, category });
   await product.save();
   console.log(product);
-  res.redirect(`/product/${product._id}`);
+  res.redirect(`/products/${product._id}`);
 });
 
 app.get("/products/:id", async (req, res) => {
