@@ -17,6 +17,7 @@ mongoose
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/products", async (req, res) => {
   const products = await Product.find({});
@@ -28,7 +29,11 @@ app.get("/products/new", (req, res) => {
 });
 
 app.post("/products", async (req, res) => {
-  res.send("Saving your new product");
+  const { name, price, category } = req.body;
+  const product = new Product({ name, price, category });
+  await product.save();
+  console.log(product);
+  res.redirect(`/product/${product._id}`);
 });
 
 app.get("/products/:id", async (req, res) => {
