@@ -36,9 +36,15 @@ app.get("/products/:id/edit", async (req, res) => {
   res.render("products/edit", { product });
 });
 
-app.put("/products/:id", (req, res) => {
+app.put("/products/:id", async (req, res) => {
+  const { id } = req.params;
   const { name, price, category } = req.body;
-  res.send("SAVED");
+  const product = await Product.findByIdAndUpdate(
+    id,
+    { name, price, category },
+    { new: true, runValidators: true }
+  );
+  res.redirect(`/products/${product._id}`);
 });
 
 app.post("/products", async (req, res) => {
