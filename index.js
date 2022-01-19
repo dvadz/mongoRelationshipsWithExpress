@@ -49,6 +49,10 @@ app.put("/products/:id", async (req, res) => {
   res.redirect(`/products/${product._id}`);
 });
 
+app.delete("/products/:id", async (req, res) => {
+  res.send("DELETED. OOPS!");
+});
+
 app.post("/products", async (req, res) => {
   const { name, price, category } = req.body;
   const product = new Product({ name, price, category });
