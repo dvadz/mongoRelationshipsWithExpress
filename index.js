@@ -7,7 +7,7 @@ const methodOverride = require("method-override");
 
 const Product = require("./models/product");
 mongoose
-  .connect("mongodb://localhost:27017/farmStand")
+  .connect("mongodb://localhost:27017/farmStandv2")
   .then(() => {
     console.log("Connection to MongoDB successful");
   })
@@ -21,6 +21,12 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
+// Farm Routes
+app.get("/farms/new", (req, res) => {
+  res.render("farms/new");
+});
+
+//Product Routes
 const categories = ["fruit", "vegetable", "dairy"];
 
 app.get("/products", async (req, res) => {
