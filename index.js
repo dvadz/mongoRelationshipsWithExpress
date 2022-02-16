@@ -5,7 +5,9 @@ const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 
+const Farm = require("./models/farm");
 const Product = require("./models/product");
+
 mongoose
   .connect("mongodb://localhost:27017/farmStandv2")
   .then(() => {
@@ -24,6 +26,13 @@ app.use(methodOverride("_method"));
 // Farm Routes
 app.get("/farms/new", (req, res) => {
   res.render("farms/new");
+});
+
+app.post("/farms", async (req, res) => {
+  console.log(req.body);
+  const farm = new Farm(req.body);
+  await farm.save();
+  res.send(farm);
 });
 
 //Product Routes
