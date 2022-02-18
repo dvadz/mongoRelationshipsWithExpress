@@ -39,9 +39,10 @@ app.get("/farms/:id", async (req, res) => {
   res.render("farms/show", { farm });
 });
 
-app.get("/farms/:id/products/new", (req, res) => {
+app.get("/farms/:id/products/new", async (req, res) => {
   const { id } = req.params;
-  res.render("products/new", { categories, id });
+  const farm = await Farm.findById(id);
+  res.render("products/new", { categories, farm });
 });
 
 app.post("/farms", async (req, res) => {
