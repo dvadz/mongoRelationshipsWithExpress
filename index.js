@@ -39,6 +39,11 @@ app.get("/farms/:id", async (req, res) => {
   res.render("farms/show", { farm });
 });
 
+app.get("/farms/:id/products/new", (req, res) => {
+  const { id } = req.params;
+  res.render("products/new", { categories, id });
+});
+
 app.post("/farms", async (req, res) => {
   console.log(req.body);
   const farm = new Farm(req.body);
