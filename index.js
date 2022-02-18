@@ -35,7 +35,7 @@ app.get("/farms/new", (req, res) => {
 
 app.get("/farms/:id", async (req, res) => {
   const { id } = req.params;
-  const farm = await Farm.findById(id);
+  const farm = await Farm.findById(id).populate("products", "name");
   res.render("farms/show", { farm });
 });
 
@@ -43,6 +43,17 @@ app.get("/farms/:id/products/new", async (req, res) => {
   const { id } = req.params;
   const farm = await Farm.findById(id);
   res.render("products/new", { categories, farm });
+});
+
+app.post("/farms/:id/products", async (req, res) => {
+  const { id } = req.params;
+  const farm = await Farm.findById(id);
+  const product = new Product(req.body);
+  product.farm = farm;
+  product.save();
+  farm.products.push(product);
+  farm.save();
+  res.redirect(`/farms/${farm._id}`);
 });
 
 app.post("/farms", async (req, res) => {
