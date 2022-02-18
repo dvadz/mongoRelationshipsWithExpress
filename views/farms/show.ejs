@@ -9,8 +9,14 @@
   <body>
     <h1><%= farm.name %></h1>
     <ul>
-      <li><%= farm.city %></li>
-      <li><%= farm.email %></li>
+      <li>City: <%= farm.city %></li>
+      <li>Email: <%= farm.email %></li>
+    </ul>
+    <h3>Products</h3>
+    <ul>
+      <% for(let product of farm.products){%>
+      <li><%=product.name%></li>
+      <% } %>
     </ul>
     <a href="/farms">&lt;&lt; All Farms</a>
     <a href="/farms/<%= farm._id %>/products/new">Add A Product</a>
