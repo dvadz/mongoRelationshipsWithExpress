@@ -100,8 +100,13 @@ app.put("/products/:id", async (req, res) => {
 
 app.delete("/products/:id", async (req, res) => {
   const { id } = req.params;
-  await Product.findByIdAndDelete(id);
-  res.redirect("/products");
+  const product = await Product.findById(id);
+  const farm = await Farm.findById(product.farm);
+  const index = farm.products.indexOf(id);
+  farm.products.splice(index, 1);
+  const deleteProduct = await Product.findByIdAndDelete(id);
+  await farm.save();
+  res.redirect(`/farms/${farm._id}`);
 });
 
 app.post("/products", async (req, res) => {
